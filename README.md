@@ -1,5 +1,5 @@
 
-# react-native-react-native-tensorflowlite
+# react-native-tensorflowlite
 
 ## Getting started
 
