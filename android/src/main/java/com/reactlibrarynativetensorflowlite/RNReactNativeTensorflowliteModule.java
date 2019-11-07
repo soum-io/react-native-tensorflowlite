@@ -98,8 +98,6 @@ public class RNReactNativeTensorflowliteModule extends ReactContextBaseJavaModul
     // need to access models and label list
     AssetManager assetManager = reactContext.getAssets();
 
-    // initialize array that holds image data
-    intValues = new int[DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y];
     //initialize graph and labels
     try{
       tflite = new Interpreter(loadModelFile(assetManager, modelPath), tfliteOptions);
@@ -116,6 +114,9 @@ public class RNReactNativeTensorflowliteModule extends ReactContextBaseJavaModul
     DIM_IMG_SIZE_X = tensor.shape()[1];
     DIM_IMG_SIZE_Y = tensor.shape()[2];
     DIM_PIXEL_SIZE = tensor.shape()[3];
+
+    // initialize array that holds image data
+    intValues = new int[DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y];
 
     // initialize byte array. The size depends if the input data needs to be quantized or not
     if(quant){
@@ -168,7 +169,7 @@ public class RNReactNativeTensorflowliteModule extends ReactContextBaseJavaModul
         // convert byte to the same float value
         confidence = (labelProbArrayB[0][i] & 0xff) / 255.0f;
       } else {
-        confidence = labelProbArrayB[0][i];
+        confidence = labelProbArray[0][i];
       }
       if (confidence > threshold) {
         WritableMap res = Arguments.createMap();
