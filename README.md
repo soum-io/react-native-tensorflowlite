@@ -20,7 +20,7 @@
 2. Append the following lines to `android/settings.gradle`:
   	```
   	include ':react-native-tensorflowlite'
-  	project(':react-native-tensorflowlite').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-react-native-tensorflowlite/android')
+  	project(':react-native-tensorflowlite').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-tensorflowlite/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
