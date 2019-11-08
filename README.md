@@ -3,11 +3,11 @@
 
 ## Getting started
 
-`$ npm install react-native-tensorflowlite --save`
+`$ npm install react-native-tflite-classification --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-tensorflowlite`
+`$ react-native link react-native-tflite-classification`
 
 ### Manual installation
 
@@ -19,20 +19,20 @@
   - Add `new RNReactNativeTensorflowlitePackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-  	include ':react-native-tensorflowlite'
-  	project(':react-native-tensorflowlite').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-tensorflowlite/android')
+  	include ':react-native-tflite-classification'
+  	project(':react-native-tflite-classification').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-tflite-classification/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-tensorflowlite')
+      compile project(':react-native-tflite-classification')
   	```
 
 
 ## Usage
 ```javascript
-import RNReactNativeTensorflowlite from 'react-native-tensorflowlite';
+import Tflite from 'react-native-tflite-classification';
 
 // TODO: What to do with the module?
-RNReactNativeTensorflowlite;
+Tflite;
 ```
   
