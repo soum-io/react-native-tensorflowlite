@@ -1,6 +1,6 @@
 
 {
-  "name": "react-native-tensorflowlite",
+  "name": "react-native-tflite-classification",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
