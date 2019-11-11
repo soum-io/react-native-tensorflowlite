@@ -1,5 +1,5 @@
 
-# react-native-tensorflowlite
+# react-native-tflite-classification
 
 ## Getting started
 
@@ -35,4 +35,3 @@ import Tflite from 'react-native-tflite-classification';
 // TODO: What to do with the module?
 Tflite;
 ```
-  
