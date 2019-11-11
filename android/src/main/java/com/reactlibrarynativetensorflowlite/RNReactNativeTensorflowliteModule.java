@@ -20,6 +20,7 @@ import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.Tensor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,13 +96,10 @@ public class RNReactNativeTensorflowliteModule extends ReactContextBaseJavaModul
   @ReactMethod
   private void loadModel(final String modelPath, final String labelsPath, final Callback callback)
           throws IOException {
-    // need to access models and label list
-    AssetManager assetManager = reactContext.getAssets();
-
     //initialize graph and labels
     try{
-      tflite = new Interpreter(loadModelFile(assetManager, modelPath), tfliteOptions);
-      labelList = loadLabelList(assetManager, labelsPath);
+      tflite = new Interpreter(loadModelFile(modelPath), tfliteOptions);
+      labelList = loadLabelList(labelsPath);
     } catch (Exception ex){
       ex.printStackTrace();
     }
@@ -189,10 +187,11 @@ public class RNReactNativeTensorflowliteModule extends ReactContextBaseJavaModul
   }
 
   // loads the labels from the label txt file in assets into a string array
-  private List<String> loadLabelList(AssetManager assetManager, String labelsPath) throws IOException {
+  private List<String> loadLabelList(String labelsPath) throws IOException {
+    File labelsFile = new File(reactContext.getFilesDir() + labelsPath);
     List<String> labelList = new ArrayList<String>();
     BufferedReader reader =
-            new BufferedReader(new InputStreamReader(assetManager.open(labelsPath)));
+            new BufferedReader(new InputStreamReader(new FileInputStream(labelsFile)));
     String line;
     while ((line = reader.readLine()) != null) {
       labelList.add(line);
@@ -202,13 +201,10 @@ public class RNReactNativeTensorflowliteModule extends ReactContextBaseJavaModul
   }
 
   // loads tflite graph from file
-  private MappedByteBuffer loadModelFile(AssetManager assetManager, String modelPath) throws IOException {
-    AssetFileDescriptor fileDescriptor = assetManager.openFd(modelPath);
-    FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
-    FileChannel fileChannel = inputStream.getChannel();
-    long startOffset = fileDescriptor.getStartOffset();
-    long declaredLength = fileDescriptor.getDeclaredLength();
-    return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
+  private MappedByteBuffer loadModelFile(String modelPath) throws IOException {
+    File modelFile = new File(reactContext.getFilesDir() + modelPath);
+    FileChannel channel = new FileInputStream(modelFile).getChannel();
+    return channel.map(FileChannel.MapMode.READ_ONLY, 0, modelFile.length());
   }
 
   // converts bitmap to byte array which is passed in the tflite graph
